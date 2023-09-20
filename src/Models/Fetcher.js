@@ -1,7 +1,6 @@
 import { ERROR, EVENT } from '../constants';
 
 export class Fetcher {
-  isLoading = false;
   eventListener = new EventTarget();
 
   async get(endpoint, config = {}) {
@@ -22,7 +21,10 @@ export class Fetcher {
   }
 
   #setLoading(loadingState) {
-    this.isLoading = loadingState;
-    this.eventListener.dispatchEvent(new Event(EVENT.LOADING_STATE_CHANGE));
+    this.eventListener.dispatchEvent(
+      new CustomEvent(EVENT.LOADING_STATE_CHANGE, {
+        detail: { isLoading: loadingState },
+      })
+    );
   }
 }

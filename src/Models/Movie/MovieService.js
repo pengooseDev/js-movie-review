@@ -38,7 +38,7 @@ export class MovieService {
     return result[0].results;
   }
 
-  async fetchModeBranch(searchTerm) {
+  async fetchMovieBranch(searchTerm) {
     if (searchTerm) return await this.#searchMovie(searchTerm);
 
     return await this.#getMovie();

@@ -3,10 +3,6 @@ import starFilled from '../assets/star_filled.png';
 export class MovieComponent {
   #element = document.createElement('li');
 
-  constructor() {
-    this.#showSkeleton();
-  }
-
   get component() {
     return this.#element;
   }
@@ -16,6 +12,7 @@ export class MovieComponent {
 
     const { title, thumbnail, rating } = movie.getData();
 
+    console.log('render:', this.#element, movie);
     this.#element.innerHTML = `
       <a href="#">
         <div class="item-card">
@@ -29,7 +26,9 @@ export class MovieComponent {
     `;
   }
 
-  #showSkeleton() {
+  showSkeleton() {
+    console.log('ske:', this.#element);
+
     this.#element.innerHTML = `
         <a href="#">
           <div class="item-card">
