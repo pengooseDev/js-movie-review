@@ -38,7 +38,13 @@ export class MovieService {
     return result[0].results;
   }
 
-  async getMovie() {
+  async fetchModeBranch(searchTerm) {
+    if (searchTerm) return await this.#searchMovie(searchTerm);
+
+    return await this.#getMovie();
+  }
+
+  async #getMovie() {
     const fetchData = await this.#fetchMoviePage(this.#page++);
     const movies = fetchData.map((movie) => {
       const { original_title, overview, poster_path, vote_average } = movie;
@@ -54,7 +60,7 @@ export class MovieService {
     return movies;
   }
 
-  async searchMovie(query) {
+  async #searchMovie(query) {
     const searchData = await this.#fetchSearchPage(query, this.#page++);
     const movies = searchData.map((movie) => {
       const { original_title, overview, poster_path, vote_average } = movie;
