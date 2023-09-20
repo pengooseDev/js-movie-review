@@ -20,15 +20,6 @@ export class MovieController {
     this.#getMovie();
   }
 
-  #fetcherIsLoading({ onLoading, onLoadEnd }) {
-    this.#fetcher.eventListener.addEventListener(
-      EVENT.LOADING_STATE_CHANGE,
-      ({ detail: { isLoading } }) => {
-        isLoading ? onLoading() : onLoadEnd();
-      }
-    );
-  }
-
   /* BindEvent */
   #setupFetchButtonEvent() {
     const fetchButton = document.querySelector('#movie-fetch-button');
@@ -49,30 +40,36 @@ export class MovieController {
     });
   }
 
+  #fetcherIsLoading({ onLoading, onLoadEnd }) {
+    this.#fetcher.eventListener.addEventListener(
+      EVENT.LOADING_STATE_CHANGE,
+      ({ detail: { isLoading } }) => {
+        isLoading ? onLoading() : onLoadEnd();
+      }
+    );
+  }
+
   async #getMovie() {
     const components = this.#view.createMovieComponent(20);
-
-    components.forEach((component) => {
-      this.#fetcherIsLoading({
-        onLoading: component.showSkeleton,
-        onLoadEnd: component.render,
-      });
-    });
+    this.#optionalRender(components);
 
     const movies = await this.#service.fetchMovieBranch(this.#searchTerm);
-
     if (movies.length < 20) this.#view.hideMovieFetchButton();
     if (movies.length === 20) this.#view.renderMovieFetchButton();
 
+    this.#optionalRender(components, movies);
+  }
+
+  #optionalRender(components, movies = []) {
     components.forEach((component, index) => {
       this.#fetcherIsLoading({
-        onLoading: component.showSkeleton,
+        onLoading: () => {
+          component.showSkeleton();
+        },
         onLoadEnd: () => {
-          component.render(movie[index]);
+          component.render(movies[index]);
         },
       });
     });
-
-    for (let i = 0; i < 20; i++) components[i].render(movies[i]);
   }
 }
