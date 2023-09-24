@@ -160,6 +160,16 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "./src/Controller/index.js":
+/*!*********************************!*\
+  !*** ./src/Controller/index.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   MovieController: () => (/* reexport safe */ _MovieController__WEBPACK_IMPORTED_MODULE_0__.MovieController)\n/* harmony export */ });\n/* harmony import */ var _MovieController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MovieController */ \"./src/Controller/MovieController.js\");\n\n\n\n//# sourceURL=webpack://js-movie-review/./src/Controller/index.js?");
+
+/***/ }),
+
 /***/ "./src/Models/Fetcher.js":
 /*!*******************************!*\
   !*** ./src/Models/Fetcher.js ***!
@@ -266,7 +276,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles/index.css */ \"./src/styles/index.css\");\n/* harmony import */ var _assets_logo_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./assets/logo.png */ \"./src/assets/logo.png\");\n/* harmony import */ var _Controller_MovieController__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Controller/MovieController */ \"./src/Controller/MovieController.js\");\n\n\n\n\nconst initializeApp = () => {\n  document.querySelector(\"img[src='./src/assets/logo.png']\").src = _assets_logo_png__WEBPACK_IMPORTED_MODULE_1__;\n\n  new _Controller_MovieController__WEBPACK_IMPORTED_MODULE_2__.MovieController();\n};\n\ninitializeApp();\n\n\n//# sourceURL=webpack://js-movie-review/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles/index.css */ \"./src/styles/index.css\");\n/* harmony import */ var _assets_logo_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./assets/logo.png */ \"./src/assets/logo.png\");\n/* harmony import */ var _Controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Controller */ \"./src/Controller/index.js\");\n\n\n\n\nconst initializeApp = () => {\n  document.querySelector(\"img[src='./src/assets/logo.png']\").src = _assets_logo_png__WEBPACK_IMPORTED_MODULE_1__;\n\n  new _Controller__WEBPACK_IMPORTED_MODULE_2__.MovieController();\n};\n\ninitializeApp();\n\n\n//# sourceURL=webpack://js-movie-review/./src/index.js?");
 
 /***/ }),
 
