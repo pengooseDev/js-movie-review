@@ -1,2 +1,2 @@
-export * from './Fetcher';
-export * from './Movie/MovieController';
+export * from './Movie/Movie';
+export * from './Movie/MovieService';

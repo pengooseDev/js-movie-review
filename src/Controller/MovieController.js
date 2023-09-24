@@ -1,11 +1,11 @@
-import { MovieService } from '../Models/Movie/MovieService';
-import { Fetcher } from '../Models/Fetcher';
-import { View } from '../View/View';
-import { EVENT } from '../constants';
+import { MovieService } from '../Models';
+import { MovieView } from '../View';
+import { Fetcher } from '../api';
+import { EVENT, MOVIE_FETCH_UNIT, SELECTOR } from '../constants';
 
 export class MovieController {
   #service;
-  #view = new View();
+  #view = new MovieView();
   #fetcher = new Fetcher();
   #searchTerm = '';
 
@@ -14,7 +14,7 @@ export class MovieController {
     this.#initial();
   }
 
-  async #initial() {
+  #initial() {
     this.#setupFetchButtonEvent();
     this.#setupSearchButtonEvent();
     this.#getMovie();
@@ -22,17 +22,17 @@ export class MovieController {
 
   /* BindEvent */
   #setupFetchButtonEvent() {
-    const fetchButton = document.querySelector('#movie-fetch-button');
-    fetchButton.addEventListener(EVENT.CLICK, async () => {
+    const fetchButton = document.querySelector(SELECTOR.FETCH_BUTTON);
+    fetchButton.addEventListener(EVENT.CLICK, () => {
       this.#getMovie();
     });
   }
 
   #setupSearchButtonEvent() {
-    const searchButton = document.querySelector('#movie-search-button');
-    const searchInput = document.querySelector('#movie-search-input');
+    const searchButton = document.querySelector(SELECTOR.SEARCH_BUTTON);
+    const searchInput = document.querySelector(SELECTOR.SEARCH_INPUT);
 
-    searchButton.addEventListener(EVENT.CLICK, async () => {
+    searchButton.addEventListener(EVENT.CLICK, () => {
       this.#view.clearMovies();
       this.#service.resetPage();
       this.#searchTerm = searchInput.value.trim();
@@ -41,16 +41,23 @@ export class MovieController {
   }
 
   async #getMovie() {
-    const components = this.#view.createMovieComponent(20);
-    const movies = await this.#fetchBranch();
+    const components = this.#view.createMovieComponent(MOVIE_FETCH_UNIT);
+    components.forEach((component) => component.showSkeleton());
 
-    if (movies.length < 20) this.#view.hideMovieFetchButton();
-    if (movies.length === 20) this.#view.renderMovieFetchButton();
+    const movies = await this.#fetchMovie();
+    this.#handleFetchButton(movies);
 
-    for (let i = 0; i < 20; i++) components[i].render(movies[i]);
+    components.forEach(
+      (component, index) => movies[index] && component.render(movies[index])
+    );
   }
 
-  async #fetchBranch() {
+  #handleFetchButton(movies) {
+    if (movies.length < MOVIE_FETCH_UNIT) this.#view.hideMovieFetchButton();
+    if (movies.length === MOVIE_FETCH_UNIT) this.#view.renderMovieFetchButton();
+  }
+
+  async #fetchMovie() {
     if (this.#searchTerm)
       return await this.#service.searchMovie(this.#searchTerm);
 
