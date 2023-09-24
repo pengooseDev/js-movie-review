@@ -11,20 +11,18 @@ export class MovieView {
       .fill(null)
       .map(() => new MovieComponent());
 
-    //이거 날려야됨
     components.forEach((v) => this.#movieList.appendChild(v.component));
 
     return components;
   }
 
-  clearMovies() {
+  clearMovieList() {
     this.#movieList.innerHTML = '';
   }
 
   hideMovieFetchButton() {
     const fetchButton = document.querySelector(SELECTOR.FETCH_BUTTON);
 
-    fetchButton.classList.remove('display');
     fetchButton.classList.add('hidden');
   }
 
@@ -32,7 +30,6 @@ export class MovieView {
     const fetchButton = document.querySelector(SELECTOR.FETCH_BUTTON);
 
     fetchButton.classList.remove('hidden');
-    fetchButton.classList.add('display');
   }
 
   getSearchTerm() {

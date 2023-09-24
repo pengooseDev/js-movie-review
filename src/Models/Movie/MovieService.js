@@ -22,7 +22,6 @@ export class MovieService {
       )
     );
 
-    if (movieResults.length === 0) return [];
     const fulfilledMovies = this.#getFulfilled(movieResults);
 
     return this.#parseTMDB(fulfilledMovies);
@@ -38,36 +37,26 @@ export class MovieService {
     return result[0].results;
   }
 
-  async getMovie() {
-    const fetchData = await this.#fetchMoviePage(this.#page++);
-    const movies = fetchData.map((movie) => {
-      const { original_title, overview, poster_path, vote_average } = movie;
-
-      return new Movie({
-        title: original_title,
-        thumbnail: `${BASE_IMAGE_URL}${poster_path}`,
-        rating: vote_average,
-        description: overview,
-      });
+  #createMovie(movie) {
+    const { original_title, overview, poster_path, vote_average } = movie;
+    return new Movie({
+      title: original_title,
+      thumbnail: `${BASE_IMAGE_URL}${poster_path}`,
+      rating: vote_average,
+      description: overview,
     });
-
-    return movies;
   }
 
-  async searchMovie(query) {
+  async getMovies() {
+    const fetchData = await this.#fetchMoviePage(this.#page++);
+
+    return fetchData.map(this.#createMovie);
+  }
+
+  async searchMovies(query) {
     const searchData = await this.#fetchSearchPage(query, this.#page++);
-    const movies = searchData.map((movie) => {
-      const { original_title, overview, poster_path, vote_average } = movie;
 
-      return new Movie({
-        title: original_title,
-        thumbnail: `${BASE_IMAGE_URL}${poster_path}`,
-        rating: vote_average,
-        description: overview,
-      });
-    });
-
-    return movies;
+    return searchData.map(this.#createMovie);
   }
 
   async #fetchSearchPage(query, page) {
