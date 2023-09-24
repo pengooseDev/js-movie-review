@@ -2,14 +2,10 @@ import './styles/index.css';
 import logo from './assets/logo.png';
 import { MovieController } from './Controller/MovieController';
 
-class App {
-  #movieController;
+const initializeApp = () => {
+  new MovieController();
 
-  constructor() {
-    this.#movieController = new MovieController();
-  }
-}
+  document.querySelector("img[src='./src/assets/logo.png']").src = logo;
+};
 
-const app = new App();
-
-document.querySelector("img[src='./src/assets/logo.png']").src = logo;
+initializeApp();
