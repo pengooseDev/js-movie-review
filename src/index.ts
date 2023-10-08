@@ -8,9 +8,9 @@ class App {
   }
 
   init() {
-    const app = document.querySelector('#app');
+    const movieList = document.querySelector('.movie-list');
 
-    if (app) new Component(app as HTMLElement);
+    if (movieList) new Component(movieList as HTMLElement);
   }
 }
 
