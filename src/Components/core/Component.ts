@@ -14,14 +14,11 @@ export class Component {
     private state: State = {},
     private props: Props = {}
   ) {
-    this.setup();
     this.render();
   }
 
-  setup() {}
-
-  template() {
-    return 'defaultTemplate';
+  template(): string {
+    return 'DEFAULT_TEMPLATE';
   }
 
   private render() {
@@ -29,16 +26,8 @@ export class Component {
     this.$parent.appendChild(this.$root);
   }
 
-  setState(newState: any) {
+  setState(newState: State) {
     this.state = { ...this.state, ...newState };
     this.render();
-  }
-
-  addEvent(eventName: any, callback: any) {
-    this.$root.addEventListener(eventName, callback);
-  }
-
-  removeEvent(eventName: any, callback: any) {
-    this.$root.removeEventListener(eventName, callback);
   }
 }
