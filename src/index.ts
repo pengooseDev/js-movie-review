@@ -1,6 +1,6 @@
 import './styles/index.css';
 // import logo from './assets/logo.png';
-import { Component } from './Components';
+import { MovieList } from './Components';
 
 class App {
   constructor() {
@@ -10,7 +10,13 @@ class App {
   init() {
     const movieList = document.querySelector('.movie-list');
 
-    if (movieList) new Component(movieList as HTMLElement);
+    if (movieList)
+      new MovieList({
+        $parent: movieList as HTMLElement,
+        state: {
+          movie: [1, 2, 3],
+        },
+      });
   }
 }
 

@@ -6,15 +6,24 @@ interface Props {
   [key: string]: any;
 }
 
-export class Component {
-  $root = document.createElement('div');
+interface ComponentOptions {
+  $parent: HTMLElement;
+  props?: Props;
+  state?: State;
+}
 
-  constructor(
-    private $parent: HTMLElement,
-    private state: State = {},
-    private props: Props = {}
-  ) {
+export class Component {
+  private $parent;
+  private props;
+  $root = document.createElement('div');
+  state: State;
+
+  constructor({ $parent, props = {}, state = {} }: ComponentOptions) {
+    this.$parent = $parent;
+    this.props = props;
+    this.state = state;
     this.render();
+    this.bindEvent();
   }
 
   template(): string {
@@ -30,4 +39,6 @@ export class Component {
     this.state = { ...this.state, ...newState };
     this.render();
   }
+
+  bindEvent() {}
 }
