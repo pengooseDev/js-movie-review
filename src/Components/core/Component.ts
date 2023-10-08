@@ -1,7 +1,19 @@
+interface State {
+  [key: string]: any;
+}
+
+interface Props {
+  [key: string]: any;
+}
+
 export class Component {
   $root = document.createElement('div');
 
-  constructor(private $parent: any, private state: any, private props: any) {
+  constructor(
+    private $parent: HTMLElement,
+    private state: State = {},
+    private props: Props = {}
+  ) {
     this.setup();
     this.render();
   }
