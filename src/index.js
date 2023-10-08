@@ -1,15 +1,12 @@
 import './styles/index.css';
 import logo from './assets/logo.png';
-import { MovieController } from './Controller/MovieController';
+import { MovieController } from './Controller';
+import { Component } from './Components';
 
 class App {
-  #movieController;
-
-  constructor() {
-    this.#movieController = new MovieController();
-  }
+  #controller = new MovieController();
 }
 
-const app = new App();
+new App();
 
 document.querySelector("img[src='./src/assets/logo.png']").src = logo;
