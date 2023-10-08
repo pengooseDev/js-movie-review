@@ -1,12 +1,9 @@
 export class Component {
   $root = document.createElement('div');
-  $parent;
-  state;
 
-  constructor(parent) {
-    this.$parent = parent;
+  constructor(private $parent: any, private state: any, private props: any) {
     this.setup();
-    this.#render();
+    this.render();
   }
 
   setup() {}
@@ -15,21 +12,21 @@ export class Component {
     return 'defaultTemplate';
   }
 
-  #render() {
+  private render() {
     this.$root.innerHTML = this.template();
     this.$parent.appendChild(this.$root);
   }
 
-  setState(newState) {
+  setState(newState: any) {
     this.state = { ...this.state, ...newState };
-    this.#render();
+    this.render();
   }
 
-  addEvent(eventName, callback) {
+  addEvent(eventName: any, callback: any) {
     this.$root.addEventListener(eventName, callback);
   }
 
-  removeEvent(eventName) {
-    this.$root.removeEventListener(eventName);
+  removeEvent(eventName: any, callback: any) {
+    this.$root.removeEventListener(eventName, callback);
   }
 }
