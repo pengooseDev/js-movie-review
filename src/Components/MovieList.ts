@@ -15,14 +15,17 @@ export class MovieList extends Component {
         <div>영화 리스트</div>
         <ul>${movieList}</ul>
         ${btn}
-    </section>
+    </section> 
     `.trim();
   }
 
   bindEvent() {
-    this.$root?.addEventListener('click', ({ target }) => {
-      //@ts-ignore
-      if (target?.classList?.contains('add')) this.AddList();
+    this.addEvent({
+      element: this.$root,
+      type: 'click',
+      listener: () => {
+        this.AddList();
+      },
     });
   }
 

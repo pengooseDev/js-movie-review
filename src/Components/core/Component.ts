@@ -12,9 +12,18 @@ interface ComponentOptions {
   state?: State;
 }
 
+type EventProps = {
+  element: Element;
+  type: string;
+  listener: EventListenerOrEventListenerObject;
+};
+
+type EventListeners = Array<EventProps>;
+
 export class Component {
   private $parent;
   private props;
+  private eventListeners: EventListeners = [];
   $root = document.createElement('div');
   state: State;
 
@@ -41,4 +50,27 @@ export class Component {
   }
 
   bindEvent() {}
+
+  addEvent({ element, type, listener }: EventProps) {
+    element.addEventListener(type, listener);
+    this.eventListeners.push({ element, type, listener });
+  }
+
+  removeEvent({ element, type, listener }: EventProps) {
+    element.removeEventListener(type, listener);
+    this.eventListeners = this.eventListeners.filter(
+      (eventListener) =>
+        eventListener.element !== element ||
+        eventListener.type !== type ||
+        eventListener.listener !== listener
+    );
+  }
+
+  clearAllEvents() {
+    this.eventListeners.forEach(({ element, type, listener }: EventProps) => {
+      element.removeEventListener(type, listener);
+    });
+
+    this.eventListeners = [];
+  }
 }
